@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.MovieWatchlist" parent="Base.Theme.MovieWatchlist" />
+
+    <style name="Theme.MovieWatchlist.NoActionBar" parent="Theme.MovieWatchlist">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>
