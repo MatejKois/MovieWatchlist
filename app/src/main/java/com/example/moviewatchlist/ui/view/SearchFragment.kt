@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -29,9 +30,15 @@ class SearchFragment : Fragment(fragment_search) {
         val searchEditText = view.findViewById<EditText>(R.id.searchEditText)
         val recyclerView = view.findViewById<RecyclerView>(R.id.searchRecyclerView)
 
-        adapter = MovieAdapter()
+        adapter = MovieAdapter { movie -> viewModel.addToWatchlist(movie) }
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
+            msg?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
 
         var searchJob: Job? = null
 
