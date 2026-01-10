@@ -6,13 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import com.example.moviewatchlist.ui.fragments.SearchFragment
-import com.example.moviewatchlist.ui.fragments.WatchlistFragment
+import com.example.moviewatchlist.repository.MovieRepository
+import com.example.moviewatchlist.ui.view.SearchFragment
+import com.example.moviewatchlist.ui.view.WatchlistFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        MovieRepository.init(this)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
