@@ -3,4 +3,7 @@
     <string name="movie_poster">Movie poster</string>
     <string name="add_to_watchlist">Add to watchlist</string>
     <string name="watched">Watched</string>
+    <string name="home_text">What would you like to watch?</string>
+    <string name="search_text">Search movies</string>
+    <string name="watchlist_is_empty_text">Your watchlist is empty!</string>
 </resources>

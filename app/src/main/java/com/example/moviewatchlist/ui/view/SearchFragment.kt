@@ -19,12 +19,17 @@ class SearchFragment : Fragment(fragment_search) {
     private val viewModel: SearchViewModel by viewModels()
 
     private lateinit var adapter: MovieAdapter
+    private lateinit var placeholderContainer: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val searchEditText = view.findViewById<EditText>(R.id.searchEditText)
         val recyclerView = view.findViewById<RecyclerView>(R.id.searchRecyclerView)
+        placeholderContainer = view.findViewById(R.id.placeholderContainer)
+
+        placeholderContainer.visibility = View.VISIBLE
+        recyclerView.visibility = View.GONE
 
         adapter = MovieAdapter { movie -> viewModel.addToWatchlist(movie) }
         recyclerView.adapter = adapter
@@ -42,6 +47,14 @@ class SearchFragment : Fragment(fragment_search) {
 
         viewModel.searchResults.observe(viewLifecycleOwner) { result ->
             adapter.submitList(result)
+
+            if (result.isNullOrEmpty()) {
+                placeholderContainer.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            } else {
+                placeholderContainer.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
         }
     }
 }

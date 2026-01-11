@@ -16,6 +16,7 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
     private lateinit var viewModel: WatchlistViewModel
     private lateinit var adapter: WatchlistAdapter
+    private lateinit var placeholder: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +31,8 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewWatchlist)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        placeholder = view.findViewById(R.id.placeholderContainer)
 
         val swipeCallback = object : ItemTouchHelper.SimpleCallback(
             0,
@@ -62,6 +65,14 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
 
         viewModel.movies.observe(viewLifecycleOwner) { movies ->
             adapter.submitList(movies)
+
+            if (movies.isNullOrEmpty()) {
+                placeholder.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+            } else {
+                placeholder.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+            }
         }
 
         viewModel.loadWatchlist()
