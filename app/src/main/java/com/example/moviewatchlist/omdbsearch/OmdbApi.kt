@@ -8,7 +8,6 @@ interface OmdbApi {
     @GET(".")
     fun searchMovies(
         @Query("apikey") apiKey: String,
-        @Query("s") query: String,
-        @Query("type") type: String = "movie"
+        @Query("s") query: String
     ): Call<OmdbSearchResponse>
 }

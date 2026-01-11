@@ -1,6 +1,5 @@
 package com.example.moviewatchlist.ui.adapters
 
-import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,13 +36,7 @@ class MovieAdapter(private val onAddToWatchlist: (UiMovie) -> Unit)
             title.text = movie.title
             info.text = "${movie.year} • ${movie.type}"
 
-            val bytes = movie.poster
-            if (bytes != null) {
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                poster.setImageBitmap(bitmap)
-            } else {
-                poster.setImageResource(android.R.color.darker_gray)
-            }
+            ImageDecoder.decodeInto(poster, movie.poster)
 
             addButton.setOnClickListener {
                 onAddToWatchlist(movie)
@@ -59,4 +52,3 @@ class MovieAdapter(private val onAddToWatchlist: (UiMovie) -> Unit)
             old == new
     }
 }
-
