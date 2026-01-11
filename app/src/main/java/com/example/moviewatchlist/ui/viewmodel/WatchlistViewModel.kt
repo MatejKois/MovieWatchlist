@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.moviewatchlist.repository.MovieRepository
 import com.example.moviewatchlist.ui.model.UiMovie
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class WatchlistViewModel : ViewModel() {
 
@@ -17,8 +15,26 @@ class WatchlistViewModel : ViewModel() {
 
     fun loadWatchlist() {
         viewModelScope.launch {
-            val movies = withContext(Dispatchers.IO) { MovieRepository.getAllWatchlistMovies() }
+            val movies = MovieRepository.getAllWatchlistMovies()
             _movies.value = movies
+        }
+    }
+
+    fun setWatched(imdbId: String, watched: Boolean) {
+        viewModelScope.launch {
+            MovieRepository.setWatched(imdbId, watched)
+        }
+    }
+
+    fun removeFromWatchlist(imdbId: String) {
+        viewModelScope.launch {
+            MovieRepository.removeFromWatchlist(imdbId)
+        }
+    }
+
+    fun addToWatchlist(movie: UiMovie) {
+        viewModelScope.launch {
+            MovieRepository.addToWatchlist(movie)
         }
     }
 }

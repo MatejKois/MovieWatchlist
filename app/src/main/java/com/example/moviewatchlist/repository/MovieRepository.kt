@@ -53,16 +53,20 @@ object MovieRepository {
         }
     }
 
-    fun addToWatchlist(movie: UiMovie): Boolean {
-        return dbHelper.insert(toMovie(movie))
+    suspend fun addToWatchlist(movie: UiMovie): Boolean = withContext(Dispatchers.IO) {
+        dbHelper.insert(toMovie(movie))
     }
 
-    fun setWatched(imdbId: String, watched: Boolean) {
+    suspend fun removeFromWatchlist(imdbId: String) = withContext(Dispatchers.IO) {
+        dbHelper.delete(imdbId)
+    }
+
+    suspend fun setWatched(imdbId: String, watched: Boolean) = withContext(Dispatchers.IO) {
         dbHelper.setWatched(imdbId, watched)
     }
 
-    fun getAllWatchlistMovies(): List<UiMovie> {
-        return dbHelper.getAllMovies().map { toMovie(it) }
+    suspend fun getAllWatchlistMovies(): List<UiMovie> = withContext(Dispatchers.IO) {
+        dbHelper.getAllMovies().map { toMovie(it) }
     }
 
     private suspend fun downloadImage(url: String): ByteArray? = withContext(Dispatchers.IO) {
