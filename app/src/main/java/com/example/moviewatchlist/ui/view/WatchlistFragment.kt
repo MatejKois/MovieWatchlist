@@ -47,7 +47,6 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
                 val movie = adapter.currentList[position]
 
                 viewModel.removeFromWatchlist(movie.imdbId)
-                viewModel.loadWatchlist()
 
                 Snackbar.make(
                     recyclerView,
@@ -55,7 +54,6 @@ class WatchlistFragment : Fragment(R.layout.fragment_watchlist) {
                     Snackbar.LENGTH_LONG
                 ).setAction("UNDO") {
                     viewModel.addToWatchlist(movie)
-                    viewModel.loadWatchlist()
                 }.show()
             }
         }

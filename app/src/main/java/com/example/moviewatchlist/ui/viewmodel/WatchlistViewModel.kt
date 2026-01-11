@@ -15,26 +15,33 @@ class WatchlistViewModel : ViewModel() {
 
     fun loadWatchlist() {
         viewModelScope.launch {
-            val movies = MovieRepository.getAllWatchlistMovies()
-            _movies.value = movies
+            refreshWatchlist()
         }
     }
 
     fun setWatched(imdbId: String, watched: Boolean) {
         viewModelScope.launch {
             MovieRepository.setWatched(imdbId, watched)
+            refreshWatchlist()
         }
     }
 
     fun removeFromWatchlist(imdbId: String) {
         viewModelScope.launch {
             MovieRepository.removeFromWatchlist(imdbId)
+            refreshWatchlist()
         }
     }
 
     fun addToWatchlist(movie: UiMovie) {
         viewModelScope.launch {
             MovieRepository.addToWatchlist(movie)
+            refreshWatchlist()
         }
+    }
+
+    private suspend fun refreshWatchlist() {
+        val movies = MovieRepository.getAllWatchlistMovies()
+        _movies.postValue(movies)
     }
 }
